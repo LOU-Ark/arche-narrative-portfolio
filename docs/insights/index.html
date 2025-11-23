@@ -4,216 +4,332 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>インサイト | LOU-Ark Portfolio</title>
-    <meta name="description" content="神話、文学、哲学の叡智を通じて、キャリア、アイデンティティ、人生の危機といった現代の課題を読み解く思索の記録。">
+    <meta name="description" content="神話、哲学、文学の叡智を通じて、現代を生きる私たちの人生の物語を再構築するための思索の記録。">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Alpine.js for mobile menu interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <style>
-        /* フォントファミリーのカスタムクラス */
-        .font-noto-serif { font-family: 'Noto Serif JP', serif; }
-        .font-roboto { font-family: 'Roboto', sans-serif; }
+        /* Custom scrollbar for a more refined look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
     </style>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'serif-jp': ['"Noto Serif JP"', 'serif'],
-                        'sans': ['Roboto', 'sans-serif'],
+                        'sans': ['Noto Sans JP', 'sans-serif'],
+                        'serif': ['Lora', 'serif'],
                     },
                     colors: {
-                        'brand-dark': '#111827', // bg-gray-900
-                        'brand-light': '#F3F4F6', // bg-gray-100
-                        'brand-text': '#D1D5DB', // text-gray-300
-                        'brand-accent': {
-                            DEFAULT: '#22d3ee', // cyan-400
-                            'hover': '#06b6d4' // cyan-500
-                        },
-                    },
-                    boxShadow: {
-                        'cyan-glow': '0 0 15px rgba(34, 211, 238, 0.4)',
-                        'cyan-glow-lg': '0 0 25px rgba(34, 211, 238, 0.5)',
+                        'brand-dark': '#111827',
+                        'brand-light': '#F3F4F6',
+                        'brand-accent': '#a89467', // A muted, sophisticated gold
+                        'brand-accent-hover': '#c0aa75',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-brand-dark text-brand-text font-sans antialiased">
+<body class="bg-brand-dark text-brand-light font-sans antialiased">
 
-    <!-- Header -->
-    <header id="header" class="bg-brand-dark/80 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="../index.html" class="text-2xl font-serif-jp font-bold text-white transition-colors hover:text-brand-accent">
-                    LOU-Ark
-                </a>
+    <!-- Header Section -->
+    <header x-data="{ open: false }" class="bg-brand-dark/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Site Logo/Title -->
+                <div class="flex-shrink-0">
+                    <a href="../index.html" class="text-2xl font-serif font-bold text-brand-light hover:text-brand-accent transition-colors duration-300">
+                        LOU-Ark
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="../index.html" class="text-gray-300 hover:text-brand-accent transition-colors">ホーム</a>
-                    <a href="../about/index.html" class="text-gray-300 hover:text-brand-accent transition-colors">私について</a>
-                    <a href="../projects/index.html" class="text-gray-300 hover:text-brand-accent transition-colors">プロジェクト</a>
-                    <a href="index.html" class="text-brand-accent font-bold">インサイト</a>
-                    <a href="../contact/index.html" class="text-gray-300 hover:text-brand-accent transition-colors">お問い合わせ</a>
+                    <a href="../index.html" class="text-gray-300 hover:text-brand-accent transition-colors duration-300">ホーム</a>
+                    <a href="../about/index.html" class="text-gray-300 hover:text-brand-accent transition-colors duration-300">私について</a>
+                    <a href="#" class="text-brand-accent font-semibold border-b-2 border-brand-accent">インサイト</a>
+                    <a href="../projects/index.html" class="text-gray-300 hover:text-brand-accent transition-colors duration-300">プロジェクト</a>
+                    <a href="../contact/index.html" class="text-gray-300 hover:text-brand-accent transition-colors duration-300">お問い合わせ</a>
                 </nav>
-                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-expanded="false">
+                        <span class="sr-only">メインメニューを開く</span>
+                        <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h-8" />
+                        </svg>
+                        <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <nav class="flex flex-col items-center space-y-4 px-6 py-4 bg-gray-800">
-                <a href="../index.html" class="text-gray-300 hover:text-brand-accent transition-colors w-full text-center py-2">ホーム</a>
-                <a href="../about/index.html" class="text-gray-300 hover:text-brand-accent transition-colors w-full text-center py-2">私について</a>
-                <a href="../projects/index.html" class="text-gray-300 hover:text-brand-accent transition-colors w-full text-center py-2">プロジェクト</a>
-                <a href="index.html" class="text-brand-accent font-bold w-full text-center py-2">インサイト</a>
-                <a href="../contact/index.html" class="text-gray-300 hover:text-brand-accent transition-colors w-full text-center py-2">お問い合わせ</a>
-            </nav>
+
+        <!-- Mobile Navigation Menu -->
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 transform -translate-y-4"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 transform translate-y-0"
+             x-transition:leave-end="opacity-0 transform -translate-y-4"
+             class="md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="../index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">ホーム</a>
+                <a href="../about/index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">私について</a>
+                <a href="#" class="bg-gray-900 text-brand-accent block px-3 py-2 rounded-md text-base font-medium" aria-current="page">インサイト</a>
+                <a href="../projects/index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">プロジェクト</a>
+                <a href="../contact/index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">お問い合わせ</a>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-16 md:py-24">
-        
+    <main>
         <!-- Page Header -->
-        <section class="text-center mb-16 md:mb-24">
-            <h1 class="text-4xl md:text-6xl font-serif-jp font-bold text-white mb-4 leading-tight">
-                インサイト
-            </h1>
-            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-6">
-                物語の深淵を覗き、自己の物語を再構築する
-            </p>
-            <div class="border-b-2 border-brand-accent w-20 mx-auto"></div>
-            <p class="mt-8 max-w-3xl mx-auto text-left md:text-center text-gray-300 leading-relaxed">
-                ここでは、神話、文学、哲学の叡智を現代の課題——キャリア、アイデンティティ、人生の危機——と結びつけ、考察を深めています。古今東西の物語が持つ普遍的な構造は、私たち自身の人生という物語を読み解くための強力な羅針盤となります。以下の記事群は、その探求の記録であり、あなた自身の物語を再構築するための思索の断片です。
-            </p>
-            <p class="mt-4 text-sm text-gray-500">最終更新日: 2025年11月23日</p>
+        <section class="py-24 sm:py-32 bg-gray-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-base font-semibold text-brand-accent tracking-wider">THOUGHTS & NARRATIVES</p>
+                <h1 class="mt-4 text-4xl font-serif font-bold text-white sm:text-5xl lg:text-6xl tracking-tight">
+                    インサイト
+                </h1>
+                <p class="mt-6 max-w-2xl mx-auto text-lg leading-8 text-gray-300">
+                    神話、哲学、文学の叡智は、現代を生きる私たちの人生の羅針盤となり得ます。ここでは、人類が紡いできた普遍的な物語の構造を紐解き、キャリアの転機、自己探求、そして人生の危機を乗り越えるための洞察を探求します。
+                </p>
+                <div class="mt-8 text-sm text-gray-400">
+                    <time datetime="2025-11-23">最終更新日: 2025年11月23日</time>
+                </div>
+            </div>
         </section>
 
-        <!-- Articles Grid -->
-        <section>
-            <h2 class="text-3xl font-serif-jp font-bold text-white text-center mb-12">思索の断片</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Article Card 7 -->
-                <a href="hero-journey-career-transformation-map-7.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">キャリアの停滞は「英雄の旅」の序章 ― 神話の構造で読み解く自己変革の地図</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">現在の仕事に行き詰まりを感じるなら、それは冒険への誘いかもしれません。神話の12のステップをキャリアパスに適用し、困難を成長の糧に変える羅針盤を提示します。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+        <!-- Articles List -->
+        <section class="py-16 sm:py-24 bg-brand-dark">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="space-y-16">
 
-                <!-- Article Card 8 -->
-                <a href="underworld-journey-greek-mythology-healing-loss-8.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">喪失の闇から再生へ：ギリシャ神話「冥界下り」に学ぶ、悲しみを乗り越える物語の力</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">人生の喪失体験は深い闇ですが、ペルセポネ達の物語は、その闇こそが再生への道筋だと教えます。神話を通じて悲しみを再解釈し、内なる強さを見出す旅へご案内します。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+                    <!-- Featured Articles with Descriptions -->
+                    <article class="relative group">
+                        <div class="absolute -inset-y-4 -inset-x-4 z-0 scale-95 bg-gray-800/50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 rounded-2xl"></div>
+                        <div class="relative">
+                            <h2 class="text-2xl font-serif font-bold text-brand-light group-hover:text-brand-accent-hover transition-colors">
+                                <a href="heros-journey-for-life-transition-and-personal-mythology-22.html">
+                                    <span class="absolute -inset-y-4 -inset-x-4 z-20 sm:-inset-x-6 rounded-2xl"></span>
+                                    <span class="relative z-10">凡庸な日常は「冒険の始まり」の合図だった - 神話学に学ぶ、人生の転機を乗り越える「英雄の旅」の法則</span>
+                                </a>
+                            </h2>
+                            <p class="relative z-10 mt-4 text-gray-300 leading-relaxed">
+                                ジョーゼフ・キャンベルが提唱した「英雄の旅」。この普遍的な物語の構造は、あなたのキャリアや人間関係の悩みに驚くほど当てはまります。神話の主人公が試練を乗り越え成長するように、あなた自身の人生の物語を再構築し、次の一歩を踏み出すための羅針盤を提供します。
+                            </p>
+                        </div>
+                    </article>
 
-                <!-- Article Card 9 -->
-                <a href="jungian-archetypes-inner-dialogue-self-discovery-9.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">あなたの中に眠る賢者と影 ― ユング心理学の「元型」で自己を深く理解する対話術</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">自分の中の矛盾した感情に混乱していませんか。ユングの「元型」は内なる多様な人格を理解する鍵です。物語の登場人物を手がかりに、自己の内なる声と対話する方法を探ります。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+                    <article class="relative group">
+                        <div class="absolute -inset-y-4 -inset-x-4 z-0 scale-95 bg-gray-800/50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 rounded-2xl"></div>
+                        <div class="relative">
+                            <h2 class="text-2xl font-serif font-bold text-brand-light group-hover:text-brand-accent-hover transition-colors">
+                                <a href="integrating-the-shadow-self-jungian-psychology-and-literature-23.html">
+                                    <span class="absolute -inset-y-4 -inset-x-4 z-20 sm:-inset-x-6 rounded-2xl"></span>
+                                    <span class="relative z-10">なぜ私たちは自分の「影」を恐れるのか？ - ユング心理学と古典文学に学ぶ、自己の暗部と統合し完全性を得る方法</span>
+                                </a>
+                            </h2>
+                            <p class="relative z-10 mt-4 text-gray-300 leading-relaxed">
+                                誰の心にも存在する、認めたくない自己の側面「シャドウ（影）」。しかし、それと向き合うプロセスにこそ、真の自己成長の鍵が隠されています。ユングの元型論を紐解きながら、文学作品に見る「影」との対峙の物語を通して、自己嫌悪を乗り越え、より深い自己理解へと至る道筋を探ります。
+                            </p>
+                        </div>
+                    </article>
 
-                <!-- Article Card 1 -->
-                <a href="mythic-structure-heros-journey-career-transformation-1.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">「英雄の旅」の神話構造で読み解くキャリアの転機：あなたの物語を再構築する羅針盤</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">普遍的な物語の型「英雄の旅」を用いて、キャリアの転換期を新たな成長の機会として捉え直すためのフレームワークを提供します。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+                    <article class="relative group">
+                         <div class="absolute -inset-y-4 -inset-x-4 z-0 scale-95 bg-gray-800/50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 rounded-2xl"></div>
+                         <div class="relative">
+                            <h2 class="text-2xl font-serif font-bold text-brand-light group-hover:text-brand-accent-hover transition-colors">
+                                <a href="understanding-the-persona-lessons-from-greek-tragedy-24.html">
+                                    <span class="absolute -inset-y-4 -inset-x-4 z-20 sm:-inset-x-6 rounded-2xl"></span>
+                                    <span class="relative z-10">その「仮面」の下にある本当のあなたへ - 古代ギリシャ悲劇から探る「ペルソナ」との健全な距離の置き方</span>
+                                </a>
+                            </h2>
+                            <p class="relative z-10 mt-4 text-gray-300 leading-relaxed">
+                                社会生活で身につけた「ペルソナ（仮面）」に息苦しさを感じていませんか。この記事では、言葉の源流である古代ギリシャ劇に立ち返り、ペルソナが持つ本来の意味と役割を再考します。物語の登場人物たちを通して、社会的役割と内なる自己との調和を見出すための哲学的洞察を提供します。
+                            </p>
+                        </div>
+                    </article>
 
-                <!-- Article Card 4 -->
-                <a href="mythological-archetypes-for-self-discovery-4.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">あなたの内なる英雄は誰か？神話の「元型（アーキタイプ）」で読み解く自己分析と人生の物語</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">神話に登場する普遍的なキャラクター「元型」を通じて、自身の性格や行動パターンを深く理解し、人生の物語における役割を見出すための探求。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+                    <!-- Divider -->
+                    <div class="border-t border-gray-700/50"></div>
+                    
+                    <h3 class="text-2xl font-serif font-bold text-brand-accent pt-8">過去の論考</h3>
 
-                <!-- Article Card 5 -->
-                <a href="rite-of-passage-navigating-life-crisis-5.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">人生の危機を「通過儀礼」として乗り越える。ジョーゼフ・キャンベルに学ぶ、自己変容の英雄譚</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">人生の困難な局面を、成長と変容のための「通過儀礼」と捉え直す視点。神話学者の知見を借りて、危機を乗り越えるための物語的アプローチを探ります。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+                    <!-- Other Articles -->
+                    <div class="space-y-12">
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="mythic-structure-heros-journey-career-transformation-1.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">「英雄の旅」の神話構造で読み解くキャリアの転機：あなたの物語を再構築する羅針盤</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
+                        
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="greek-tragedy-philosophy-of-fate-reconciliation-2.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">なぜ私たちは運命に抗えないのか？ギリシャ悲劇に学ぶ、人生の「理不尽」と和解する哲学</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
 
-                <!-- Article Card 2 -->
-                <a href="greek-tragedy-philosophy-of-fate-reconciliation-2.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">なぜ私たちは運命に抗えないのか？ギリシャ悲劇に学ぶ、人生の「理不尽」と和解する哲学</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">避けられない困難や理不尽な出来事とどう向き合うか。古代ギリシャの悲劇が示す運命の概念を通じて、現代人が抱える苦悩との和解の道を探ります。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="kafka-metamorphosis-self-alienation-identity-rediscovery-3.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">カフカ『変身』にみる自己疎外からの脱却：失われたアイデンティティを再発見する物語的探求</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
 
-                <!-- Article Card 3 -->
-                <a href="kafka-metamorphosis-self-alienation-identity-rediscovery-3.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">カフカ『変身』にみる自己疎外からの脱却：失われたアイデンティティを再発見する物語的探求</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">社会や他者との関係の中で見失いがちな「本当の自分」。カフカの不条理な物語を鏡として、自己疎外のメカニズムを解き明かし、アイデンティティを取り戻す旅。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
-                
-                <!-- Article Card 6 -->
-                <a href="embracing-the-shadow-lessons-from-faust-6.html" class="group block bg-gray-800/50 backdrop-blur-sm p-8 rounded-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 hover:shadow-cyan-glow transform hover:-translate-y-1">
-                    <h3 class="text-xl font-serif-jp font-bold text-white group-hover:text-brand-accent transition-colors duration-300">自己の「影（シャドウ）」と対峙する物語の力——ゲーテ『ファウスト』から学ぶ全人格的成長への道</h3>
-                    <p class="mt-4 text-gray-400 text-sm leading-relaxed">誰もが持つ、認めたくない自己の側面「シャドウ」。『ファウスト』の物語を通して、影と向き合い、統合することがもたらす人格的成熟について考察します。</p>
-                    <span class="mt-6 inline-block text-brand-accent font-bold group-hover:underline">続きを読む &rarr;</span>
-                </a>
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="mythological-archetypes-for-self-discovery-4.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">あなたの内なる英雄は誰か？神話の「元型（アーキタイプ）」で読み解く自己分析と人生の物語</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
 
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="rite-of-passage-navigating-life-crisis-5.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">人生の危機を「通過儀礼」として乗り越える。ジョーゼフ・キャンベルに学ぶ、自己変容の英雄譚</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
+
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="embracing-the-shadow-lessons-from-faust-6.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">自己の「影（シャドウ）」と対峙する物語の力——ゲーテ『ファウスト』から学ぶ全人格的成長への道</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
+
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="hero-journey-career-transformation-map-7.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">キャリアの停滞は「英雄の旅」の序章 ― 神話の構造で読み解く自己変革の地図</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
+
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="underworld-journey-greek-mythology-healing-loss-8.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">喪失の闇から再生へ：ギリシャ神話「冥界下り」に学ぶ、悲しみを乗り越える物語の力</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
+
+                        <article class="relative group">
+                            <div class="relative">
+                                <h3 class="text-xl font-serif font-semibold text-gray-200 group-hover:text-brand-accent-hover transition-colors">
+                                    <a href="jungian-archetypes-inner-dialogue-self-discovery-9.html">
+                                        <span class="absolute -inset-2 z-20"></span>
+                                        <span class="relative z-10">あなたの中に眠る賢者と影 ― ユング心理学の「元型」で自己を深く理解する対話術</span>
+                                    </a>
+                                </h3>
+                            </div>
+                        </article>
+                    </div>
+
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-gray-800">
-        <div class="container mx-auto px-6 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-serif-jp font-bold text-white mb-4">LOU-Ark</h3>
-                    <p class="text-gray-400">普遍的物語と人文科学的探求による、個人の人生物語の再構築。</p>
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 border-t border-gray-700/50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div class="space-y-8 xl:col-span-1">
+                    <a href="../index.html" class="text-3xl font-serif font-bold text-brand-light hover:text-brand-accent transition-colors duration-300">
+                        LOU-Ark
+                    </a>
+                    <p class="text-gray-400 text-base">
+                        普遍的物語と人文科学的探求による、個人の人生物語の再構築。
+                    </p>
+                    <!-- Social Links can be added here -->
                 </div>
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-4">サイトマップ</h3>
-                    <ul class="space-y-2">
-                        <li><a href="../index.html" class="text-gray-400 hover:text-brand-accent transition-colors">ホーム</a></li>
-                        <li><a href="../about/index.html" class="text-gray-400 hover:text-brand-accent transition-colors">私について</a></li>
-                        <li><a href="../projects/index.html" class="text-gray-400 hover:text-brand-accent transition-colors">プロジェクト</a></li>
-                        <li><a href="index.html" class="text-gray-400 hover:text-brand-accent transition-colors">インサイト</a></li>
-                        <li><a href="../contact/index.html" class="text-gray-400 hover:text-brand-accent transition-colors">お問い合わせ</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-4">リーガル</h3>
-                    <ul class="space-y-2">
-                        <li><a href="../legal/privacy-policy.html" class="text-gray-400 hover:text-brand-accent transition-colors">プライバシーポリシー</a></li>
-                    </ul>
+                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">サイトマップ</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li><a href="../index.html" class="text-base text-gray-400 hover:text-brand-light">ホーム</a></li>
+                                <li><a href="../about/index.html" class="text-base text-gray-400 hover:text-brand-light">私について</a></li>
+                                <li><a href="#" class="text-base text-gray-400 hover:text-brand-light">インサイト</a></li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">関連リンク</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li><a href="../projects/index.html" class="text-base text-gray-400 hover:text-brand-light">プロジェクト</a></li>
+                                <li><a href="../contact/index.html" class="text-base text-gray-400 hover:text-brand-light">お問い合わせ</a></li>
+                                <li><a href="../legal/privacy-policy.html" class="text-base text-gray-400 hover:text-brand-light">プライバシーポリシー</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
-                <p>&copy; 2025 LOU-Ark. All Rights Reserved.</p>
+            <div class="mt-12 border-t border-gray-700/50 pt-8">
+                <p class="text-base text-gray-400 xl:text-center">&copy; 2025 LOU-Ark Portfolio. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Add shadow to header on scroll
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 10) {
-                header.classList.add('shadow-lg', 'shadow-gray-900/50');
-            } else {
-                header.classList.remove('shadow-lg', 'shadow-gray-900/50');
-            }
-        });
-    </script>
 </body>
 </html>
