@@ -1,89 +1,68 @@
 name: Daily Growth Cycle (Generate & Post)
 
-# トリガー設定
 on:
   schedule:
-    # 日本時間 21:00 = UTC 12:00
+    # 日本時間 21:00 (UTC 12:00) に実行
     - cron: '0 12 * * *'
   workflow_dispatch: # 手動実行ボタン
 
 jobs:
   growth-cycle:
     runs-on: ubuntu-latest
-    
-    # 権限設定 (HPリポジトリへのPushに必要)
     permissions:
       contents: write
 
     steps:
-      # --- 1. 環境の準備 ---
-      
-      # (A) 生成エンジン (MySiteGen-Agent) を 'agent' フォルダに配置
+      # 1. 環境構築
       - name: Checkout Generator Agent
         uses: actions/checkout@v4
         with:
           repository: LOU-Ark/MySiteGen-Agent
           path: agent
-          token: ${{ secrets.GITHUB_PAT }} # PrivateリポジトリならPATが必要
+          token: ${{ secrets.GH_PAT }} # ⬅️ 【修正】ここを GH_PAT に変更
 
-      # (B) HPリポジトリ (arche-narrative-portfolio) を 'agent/output' に配置
-      #     これでエージェントが output フォルダに書き込むと、HPが更新される状態になる
       - name: Checkout Target Website
         uses: actions/checkout@v4
         with:
           path: agent/output
+          # ここは自分自身のリポジトリなのでトークン指定なしでOK（GITHUB_TOKENが自動使用される）
 
-      # (C) 拡散ボット (Growth_X_bot) を 'bot' フォルダに配置
       - name: Checkout Growth Bot
         uses: actions/checkout@v4
         with:
           repository: Ry02024/Growth_X_bot
           path: bot
 
-      # (D) Pythonのセットアップ
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # (E) 依存ライブラリのインストール
       - name: Install Dependencies
         run: |
           pip install -r agent/requirements.txt
           pip install -r bot/requirements.txt
 
-      # --- 2. パスの自動修正 (Colab -> GitHub Actions) ---
-      
+      # 2. パスの自動修正 (GitHub Actions用に書き換え)
       - name: Patch Paths for GitHub Actions
         run: |
-          # 現在のワークスペースの絶対パスを取得
           WORKSPACE_DIR=$(pwd)
-          
-          # 1. MySiteGen-Agent のルートパスを書き換え
-          #    "/content/MySiteGen-Agent" -> "$WORKSPACE_DIR/agent"
+          # MySiteGen-Agent内のパス設定を修正
           find agent -name "*.py" -print0 | xargs -0 sed -i "s|/content/MySiteGen-Agent|$WORKSPACE_DIR/agent|g"
-          
-          # 2. 連携用JSONのパスを書き換え (これは重要！)
-          #    "/content/newly_updated_articles.json" -> "$WORKSPACE_DIR/newly_updated_articles.json"
           find agent -name "*.py" -print0 | xargs -0 sed -i "s|/content/newly_updated_articles.json|$WORKSPACE_DIR/newly_updated_articles.json|g"
-          
-          # 3. Growth_X_bot のパス設定 (config.py) は前回の修正で相対パス対応済みと仮定
-          #    念のため X_bot 用の連携スクリプトがあれば、そこも書き換える
-
+          # Growth_X_bot内のパス設定を修正
+          find bot -name "config.py" -print0 | xargs -0 sed -i "s|/content/Growth_X_bot|$WORKSPACE_DIR/bot|g"
           echo "✅ Paths patched successfully."
 
-      # --- 3. 記事生成 & 改善 (MySiteGen-Agent) ---
-      
+      # 3. 記事生成 & 改善 (main_02)
       - name: Run Improvement Cycle (main_02)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           cd agent
-          # 自動生成を実行
           python main_02_improvement_cycle.py
 
-      # --- 4. タグ挿入 (main_03) ---
-      
+      # 4. タグ挿入 (main_03)
       - name: Inject Tags (main_03)
         env:
           GTM_ID: ${{ secrets.GTM_ID }}
@@ -92,13 +71,10 @@ jobs:
           cd agent
           python main_03_inject_tags.py
 
-      # --- 5. HPのデプロイ (Push) ---
-      
+      # 5. HPのデプロイ (Push)
       - name: Deploy Website Changes
         run: |
           cd agent/output
-          
-          # 変更があるか確認
           if [[ -n $(git status --porcelain) ]]; then
             git config user.name "AI Agent (GitHub Actions)"
             git config user.email "actions@github.com"
@@ -110,8 +86,7 @@ jobs:
             echo "ℹ️ No changes to deploy."
           fi
 
-      # --- 6. X (Twitter) への投稿 (Growth_X_bot) ---
-      
+      # 6. X (Twitter) への投稿 (Bridge Script)
       - name: Run X Bot Script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -120,23 +95,13 @@ jobs:
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
         run: |
-          # 連携用JSONが存在するか確認
+          # JSONが生成されているか確認してから実行
           JSON_PATH="../newly_updated_articles.json"
-          
           if [ -f "$JSON_PATH" ]; then
             echo "✅ Update JSON found. Running Bot..."
-            
-            # ⚠️ ここで実行するスクリプトが必要です
-            # Colabで動かしていた「実行セル2 (Growth_X_bot)」の内容を
-            # 'agent/run_x_bot_action.py' として保存しておくか、
-            # ここで 'bot/src/main.py' を呼び出す形に調整する必要があります。
-            
-            # 今回は、MySiteGen-Agent側に 'run_x_bot_bridge.py' を用意したと仮定して実行します
-            # (または、次のステップでこのファイルを作成するコマンドを入れます)
-            
             cd agent
+            # ブリッジスクリプトを実行
             python run_x_bot_bridge.py
-            
           else
             echo "ℹ️ No update JSON found. Skipping X post."
           fi
