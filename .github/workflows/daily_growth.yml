@@ -96,7 +96,8 @@ jobs:
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
         run: |
           # JSONが生成されているか確認してから実行
-          JSON_PATH="../newly_updated_articles.json"
+          JSON_PATH="agent/newly_updated_articles.json"
+          echo "Checking for JSON at: $JSON_PATH"
           if [ -f "$JSON_PATH" ]; then
             echo "✅ Update JSON found. Running Bot..."
             cd agent
@@ -104,4 +105,5 @@ jobs:
             python run_x_bot_bridge.py
           else
             echo "ℹ️ No update JSON found. Skipping X post."
+            ls -R agent
           fi
