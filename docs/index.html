@@ -1,228 +1,238 @@
 <!DOCTYPE html>
-<html lang="ja" class="scroll-smooth">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ホーム - LOU-Ark | あなたの人生の物語を再構築する</title>
-    <meta name="description" content="普遍的物語と人文科学的探求を通じて、あなた自身の人生の物語を再構築する旅へ。神話、哲学、文学の叡智を、現代を生きる私たちのための羅針盤として読み解きます。">
+    <title>ホーム | LOU-Ark Portfolio - 人生の物語を再構築する</title>
+    <meta name="description" content="神話、哲学、文学の叡智を通じて、あなた自身の人生の物語を再構築し、深い意味を見出す旅へ。キャリアの転機や個人の悩みに、普遍的な物語の構造で光を当てます。">
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
     <style type="text/tailwindcss">
         @layer base {
             html {
-                -webkit-tap-highlight-color: transparent;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
-        }
-        @layer theme {
-            extend: {
-                fontFamily: {
-                    serif: ['Noto Serif JP', 'serif'],
-                    sans: ['Noto Sans JP', 'sans-serif'],
-                },
-                colors: {
-                    'brand-dark': '#1a1a1a',
-                    'brand-light': '#f0e9e0',
-                    'brand-accent': '#c5a57e',
-                    'brand-accent-hover': '#b39069',
-                }
+            body {
+                font-family: 'Inter', 'Noto Serif JP', serif;
+                background-color: #111827; /* bg-gray-900 */
+                color: #d1d5db; /* text-gray-300 */
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-family: 'Noto Serif JP', serif;
+                font-weight: 700;
+            }
+            .brand-accent {
+                color: #f59e0b; /* amber-500 */
+            }
+            .brand-accent-hover:hover {
+                color: #fbbF24; /* amber-400 */
             }
         }
     </style>
 </head>
-<body class="bg-brand-dark text-brand-light font-sans antialiased">
+<body class="bg-gray-900 text-gray-300">
 
-    <div id="container" class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-700/50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white font-serif hover:text-amber-400 transition-colors duration-300">
+                LOU-Ark
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="text-amber-400 font-semibold">ホーム</a>
+                <a href="about/index.html" class="hover:text-amber-400 transition-colors duration-300">私について</a>
+                <a href="insights/index.html" class="hover:text-amber-400 transition-colors duration-300">インサイト</a>
+                <a href="projects/index.html" class="hover:text-amber-400 transition-colors duration-300">プロジェクト</a>
+                <a href="contact/index.html" class="bg-amber-500 text-gray-900 px-4 py-2 rounded-md hover:bg-amber-400 transition-colors duration-300 font-semibold">お問い合わせ</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+            <a href="index.html" class="block py-2 px-6 text-amber-400 font-semibold">ホーム</a>
+            <a href="about/index.html" class="block py-2 px-6 hover:bg-gray-700">私について</a>
+            <a href="insights/index.html" class="block py-2 px-6 hover:bg-gray-700">インサイト</a>
+            <a href="projects/index.html" class="block py-2 px-6 hover:bg-gray-700">プロジェクト</a>
+            <a href="contact/index.html" class="block py-2 px-6 hover:bg-gray-700">お問い合わせ</a>
+        </div>
+    </header>
 
-        <!-- Header Section -->
-        <header class="bg-brand-dark/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-800">
-            <div class="container mx-auto px-6 py-4">
-                <div class="flex justify-between items-center">
-                    <div class="text-xl font-serif font-bold text-brand-light">
-                        <a href="index.html" class="transition-colors hover:text-brand-accent">LOU-Ark</a>
-                    </div>
-                    <nav class="hidden md:flex items-center space-x-8">
-                        <a href="index.html" class="text-brand-accent font-medium border-b-2 border-brand-accent pb-1">ホーム</a>
-                        <a href="about/index.html" class="text-brand-light transition-colors hover:text-brand-accent">私について</a>
-                        <a href="insights/index.html" class="text-brand-light transition-colors hover:text-brand-accent">インサイト</a>
-                        <a href="projects/index.html" class="text-brand-light transition-colors hover:text-brand-accent">プロジェクト</a>
-                        <a href="contact/index.html" class="text-brand-light transition-colors hover:text-brand-accent">お問い合わせ</a>
-                    </nav>
-                    <div class="md:hidden">
-                        <button id="mobile-menu-button" class="text-brand-light focus:outline-none">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                            </svg>
-                        </button>
-                    </div>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 md:py-32 bg-gray-900">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight md:leading-snug mb-4">
+                    あなたの人生は、まだ語られていない<br class="hidden md:block" /><span class="brand-accent">英雄譚</span>である。
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mt-6 mb-10">
+                    私たちは皆、自らの物語を生きる主人公です。神話、哲学、文学という人類の叡智を羅針盤に、キャリアの転機、人生の苦難、そして自己の探求という名の冒険を意味ある物語として再構築する旅が、ここから始まります。
+                </p>
+                <div class="space-x-4">
+                    <a href="insights/index.html" class="bg-amber-500 text-gray-900 px-8 py-3 rounded-md hover:bg-amber-400 transition-colors duration-300 font-semibold text-lg">探求を始める</a>
+                    <a href="about/index.html" class="border border-amber-500 text-amber-500 px-8 py-3 rounded-md hover:bg-amber-500 hover:text-gray-900 transition-colors duration-300 font-semibold text-lg">私について</a>
                 </div>
             </div>
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden bg-gray-900">
-                <nav class="flex flex-col items-center space-y-4 py-4">
-                    <a href="index.html" class="text-brand-accent font-medium">ホーム</a>
-                    <a href="about/index.html" class="text-brand-light transition-colors hover:text-brand-accent">私について</a>
-                    <a href="insights/index.html" class="text-brand-light transition-colors hover:text-brand-accent">インサイト</a>
-                    <a href="projects/index.html" class="text-brand-light transition-colors hover:text-brand-accent">プロジェクト</a>
-                    <a href="contact/index.html" class="text-brand-light transition-colors hover:text-brand-accent">お問い合わせ</a>
-                </nav>
-            </div>
-        </header>
+        </section>
 
-        <!-- Main Content -->
-        <main class="flex-grow">
-
-            <!-- Hero Section -->
-            <section class="py-20 md:py-32 bg-gray-900">
-                <div class="container mx-auto px-6 text-center">
-                    <h1 class="text-4xl md:text-6xl font-serif font-bold text-brand-light leading-tight mb-4">
-                        あなたの人生は、一編の壮大な物語である。
-                    </h1>
-                    <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed mb-8">
-                        神話、哲学、文学——人類が紡いできた普遍的な物語の叡智を羅針盤に、あなた自身の経験を読み解き、意味を再構築する。ここは、失われた物語を取り戻し、未来への新たな一歩を刻むための思索の場です。
-                    </p>
-                    <div class="flex justify-center space-x-4">
-                        <a href="insights/index.html" class="bg-brand-accent text-brand-dark font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105 hover:bg-brand-accent-hover shadow-lg">
-                            探求を始める
-                        </a>
-                        <a href="about/index.html" class="bg-gray-800 text-brand-light font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105 hover:bg-gray-700 shadow-lg">
-                            私について
-                        </a>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-12">サイト更新日: 2025年11月30日</p>
+        <!-- Articles Section -->
+        <section class="py-16 md:py-24 bg-gray-800/50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">最新の探求</h2>
+                    <p class="text-gray-400 mt-2">神話と人文科学の視点から、現代を生きるための洞察を紡ぎます。</p>
+                    <p class="text-sm text-gray-500 mt-4">更新日: 2025年12月01日</p>
                 </div>
-            </section>
 
-            <!-- Articles Section -->
-            <section id="articles" class="py-16 md:py-24 bg-brand-dark">
-                <div class="container mx-auto px-6">
-                    <div class="max-w-4xl mx-auto">
-                        <h2 class="text-3xl md:text-4xl font-serif font-bold text-center mb-12 text-brand-light">
-                            探求の記録 <span class="text-base font-sans text-gray-500 block mt-2">Record of Exploration</span>
-                        </h2>
-
-                        <div class="space-y-10">
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="rediscovering-personal-narrative-mythological-archetypes-for-modern-life-46.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        失われた物語を取り戻す：なぜ神話の原型は、現代を生きる私たちの羅針盤となるのか？
-                                    </a>
-                                </h3>
-                                <p class="text-gray-400 leading-relaxed">
-                                    情報過多の現代社会で感じる意味の喪失感は、個人の「物語」の不在から生じます。この記事では、比較神話学の視点から、古今東西の物語に共通する「原型（アーキタイプ）」が、いかに自己理解を深め、混乱の時代を生き抜くための内なる羅針盤となるのかを深く探求します。
-                                </p>
-                            </article>
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="heros-journey-framework-reconstructing-your-life-story-47.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        あなたの人生を「英雄の旅」として読み解く：自己の物語を再構築する実践的フレームワーク
-                                    </a>
-                                </h3>
-                                <p class="text-gray-400 leading-relaxed">
-                                    すべての人生は、一つの壮大な物語です。ジョーゼフ・キャンベルが提唱した「英雄の旅」の構造を用いて、あなた自身の経験を再評価し、未来への新たな意味を見出すための実践的フレームワークを紹介します。過去の試練を乗り越え、未来を創造する主人公はあなた自身です。
-                                </p>
-                            </article>
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="mythology-of-persephone-psychology-of-navigating-life-crisis-48.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        闇と再生の神話学：ペルセポネの物語に学ぶ、人生の「冬」を越えるための深層心理
-                                    </a>
-                                </h3>
-                                <p class="text-gray-400 leading-relaxed">
-                                    キャリアの停滞、人間関係の喪失—人生の「冬」の時期をどう乗り越えればよいのでしょうか。ギリシャ神話の女神ペルセポネが冥界で過ごした物語を深層心理学的に読み解き、困難な経験がもたらす内面的な変容と、再生に至るための思索的洞察を提供します。
-                                </p>
-                            </article>
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="reclaiming-personal-mythology-for-modern-life-37.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        失われた物語を探して：神話的思考が拓く、あなただけの人生の地図
-                                    </a>
-                                </h3>
-                            </article>
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="prometheus-myth-transforming-career-struggle-into-creativity-38.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        挫折という名の“盗まれた火”：プロメテウス神話に学ぶ、キャリアの苦難を創造性へと転換する視点
-                                    </a>
-                                </h3>
-                            </article>
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="narrative-journaling-prompts-for-your-heros-journey-39.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        あなた自身の英雄譚を紡ぐための7つの問い：人生の転機を読み解くナラティブ・ジャーナリング入門
-                                    </a>
-                                </h3>
-                            </article>
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="why-modern-mythology-matters-for-life-story-reconstruction-43.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        なぜ現代に神話が必要か？――自己の物語を再構築するための古代の叡智
-                                    </a>
-                                </h3>
-                            </article>
-                            
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="heros-journey-as-a-guide-for-personal-growth-and-transition-44.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        ジョーゼフ・キャンベル「英雄の旅」で読み解く、あなたの人生の転機と成長
-                                    </a>
-                                </h3>
-                            </article>
-
-                            <article class="border-b border-gray-800 pb-10 last:border-b-0">
-                                <h3 class="text-2xl font-serif font-bold mb-3">
-                                    <a href="mythology-of-loss-and-rebirth-finding-strength-in-endings-45.html" class="text-brand-accent transition-colors hover:text-brand-accent-hover">
-                                        喪失の闇から再生の光へ――世界の神話に学ぶ「終わり」を乗り越える力
-                                    </a>
-                                </h3>
-                            </article>
-                            
-                        </div>
-                        <div class="text-center mt-16">
-                            <a href="insights/index.html" class="inline-block bg-transparent border border-brand-accent text-brand-accent font-bold py-3 px-8 rounded-full transition-colors hover:bg-brand-accent hover:text-brand-dark">
-                                全てのインサイトを見る
-                            </a>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Article Card 1 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="how-to-rewrite-your-life-story-with-ancient-myths-49.html" class="hover:text-amber-400 transition-colors duration-300">あなたの人生という物語を書き換える方法：古代神話に学ぶ自己発見の旅</a>
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                現代社会で感じる漠然とした不安や目的の喪失感。その根源は、あなた自身の「物語」の不在にあるのかもしれません。比較神話学と深層心理学の視点から、英雄たちの物語がいかに私たちの内なる葛藤を映し出し、人生を再構築するための羅針盤となるのかを解き明かします。
+                            </p>
                         </div>
                     </div>
-                </div>
-            </section>
-        </main>
 
-        <!-- Footer Section -->
-        <footer class="bg-gray-900 border-t border-gray-800">
-            <div class="container mx-auto px-6 py-8">
-                <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                    <div class="mb-4 md:mb-0">
-                        <p class="text-lg font-serif font-bold text-brand-light">LOU-Ark</p>
-                        <p class="text-sm text-gray-500">普遍的物語による、個人の人生物語の再構築</p>
+                    <!-- Article Card 2 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="applying-heros-journey-to-career-and-life-transitions-50.html" class="hover:text-amber-400 transition-colors duration-300">人生の転機を乗り越える「英雄の旅」：ジョーゼフ・キャンベルの神話理論をキャリアと自己変革に活かす</a>
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                キャリアチェンジ、人間関係の変化など、人生の岐路に立ったとき、私たちはどう進むべきか。神話学者J・キャンベルが提唱した「英雄の旅」は、自己変革の普遍的なロードマップです。本稿ではこの物語の原型を紐解き、あなたが直面する困難が成長のための試練であることを具体的に解説します。
+                            </p>
+                        </div>
                     </div>
-                    <nav class="flex space-x-6 text-gray-400 mb-4 md:mb-0">
-                        <a href="index.html" class="hover:text-brand-accent">ホーム</a>
-                        <a href="about/index.html" class="hover:text-brand-accent">私について</a>
-                        <a href="insights/index.html" class="hover:text-brand-accent">インサイト</a>
-                        <a href="legal/privacy-policy.html" class="hover:text-brand-accent">プライバシーポリシー</a>
-                    </nav>
+
+                    <!-- Article Card 3 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="wisdom-for-loneliness-and-anxiety-from-classic-philosophy-51.html" class="hover:text-amber-400 transition-colors duration-300">孤独と不安の時代を生き抜く智慧：古典哲学と文学に学ぶ、内なる静けさの見つけ方</a>
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                SNSで常に繋がっていても深まる孤独感。その本質と向き合うため、ストア派哲学や古典文学の深遠な洞察に耳を傾けてみませんか。時代を超えた人類の智慧が、現代の私たちが抱える心の揺らぎを鎮め、内なる静けさへと導くための実践的なヒントを与えてくれます。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 4 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="heros-journey-framework-reconstructing-your-life-story-47.html" class="hover:text-amber-400 transition-colors duration-300">あなたの人生を「英雄の旅」として読み解く：自己の物語を再構築する実践的フレームワーク</a>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 5 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="mythology-of-persephone-psychology-of-navigating-life-crisis-48.html" class="hover:text-amber-400 transition-colors duration-300">闇と再生の神話学：ペルセポネの物語に学ぶ、人生の「冬」を越えるための深層心理</a>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Article Card 6 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="reclaiming-personal-mythology-for-modern-life-37.html" class="hover:text-amber-400 transition-colors duration-300">失われた物語を探して：神話的思考が拓く、あなただけの人生の地図</a>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 7 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="prometheus-myth-transforming-career-struggle-into-creativity-38.html" class="hover:text-amber-400 transition-colors duration-300">挫折という名の“盗まれた火”：プロメテウス神話に学ぶ、キャリアの苦難を創造性へと転換する視点</a>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 8 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="narrative-journaling-prompts-for-your-heros-journey-39.html" class="hover:text-amber-400 transition-colors duration-300">あなた自身の英雄譚を紡ぐための7つの問い：人生の転機を読み解くナラティブ・ジャーナリング入門</a>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Article Card 9 -->
+                    <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/10 hover:border-amber-500/30 transition-all duration-300 flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-3">
+                                <a href="why-modern-mythology-matters-for-life-story-reconstruction-43.html" class="hover:text-amber-400 transition-colors duration-300">なぜ現代に神話が必要か？――自己の物語を再構築するための古代の叡智</a>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- ... other cards ... -->
+                    
                 </div>
-                <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-                    <p>&copy; 2025 LOU-Ark Portfolio. All Rights Reserved.</p>
+                <div class="text-center mt-16">
+                    <a href="insights/index.html" class="text-amber-400 font-semibold hover:text-amber-300 transition-colors duration-300 text-lg">
+                        すべてのインサイトを見る &rarr;
+                    </a>
                 </div>
             </div>
-        </footer>
+        </section>
+    </main>
 
-    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white font-serif mb-4">LOU-Ark</h3>
+                    <p class="text-gray-400">普遍的物語と人文科学的探求による、個人の人生物語の再構築。</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">ナビゲーション</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-amber-400 transition-colors">ホーム</a></li>
+                        <li><a href="about/index.html" class="text-gray-400 hover:text-amber-400 transition-colors">私について</a></li>
+                        <li><a href="insights/index.html" class="text-gray-400 hover:text-amber-400 transition-colors">インサイト</a></li>
+                        <li><a href="projects/index.html" class="text-gray-400 hover:text-amber-400 transition-colors">プロジェクト</a></li>
+                        <li><a href="contact/index.html" class="text-gray-400 hover:text-amber-400 transition-colors">お問い合わせ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">リーガル</h3>
+                    <ul class="space-y-2">
+                        <li><a href="legal/privacy-policy.html" class="text-gray-400 hover:text-amber-400 transition-colors">プライバシーポリシー</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 LOU-Ark Portfolio. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
+        // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
